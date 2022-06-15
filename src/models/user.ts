@@ -23,6 +23,10 @@ const userSchema: mongoose.Schema = new Schema(
       type: String,
     },
     passwordResetExpired: Date,
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

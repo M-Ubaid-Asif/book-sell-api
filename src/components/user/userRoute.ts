@@ -1,12 +1,12 @@
 import auth from '../../middlewares/auth'
 import express from 'express'
 import {
-    deleteUser,
-    fogetPassword,
-    login,
-    register,
-    resetPassword,
-    updateUser,
+  deleteUser,
+  fogetPassword,
+  login,
+  register,
+  resetPassword,
+  updateUser,
 } from './userController'
 
 const router = express.Router()

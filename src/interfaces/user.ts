@@ -6,6 +6,7 @@ export default interface TUser extends Document {
   phone: number
   passwordResetToken: string
   passwordResetExpired: Date
+  isDeleted: boolean
   comparePassword: (password: string) => boolean
   createPasswordResetToken: () => string
 }

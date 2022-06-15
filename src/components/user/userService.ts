@@ -11,7 +11,18 @@ export const finduserBy = async (filter: any, project: string) => {
   return doc ? doc : false
 }
 
-export const findeAndUpdate = async (_id, data) => {
+export const findAndUpdate = async (_id, data) => {
   const doc = await User.findByIdAndUpdate(_id, data)
   return doc ? doc : false
+}
+
+export const findAndDelete = async (data) => {
+  data.isDeleted = false
+  const doc = await User.findOne(data, 'isDeleted')
+  if (!doc) {
+    return false
+  }
+  doc.isDeleted = true
+  const newDoc = await doc.save()
+  return newDoc ? true : false
 }

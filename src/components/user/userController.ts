@@ -3,7 +3,12 @@ import crypto from 'crypto'
 
 import { GenerateToken } from '../../utils/jwt'
 import AppError from '../../utils/appError'
-import { createUser, findeAndUpdate, finduserBy } from './userService'
+import {
+  createUser,
+  findAndDelete,
+  findAndUpdate,
+  finduserBy,
+} from './userService'
 import sendEmail from '../../utils/email'
 import logger from '../../config/logger'
 export const register = async (
@@ -73,7 +78,7 @@ export const updateUser = async (
 ) => {
   try {
     const _id = req.user._id
-    const updatedDoc = await findeAndUpdate(_id, req.body)
+    const updatedDoc = await findAndUpdate(_id, req.body)
     if (!updatedDoc) {
       throw new AppError('Failed to update user', 400)
     }
@@ -162,6 +167,26 @@ export const resetPassword = async (
     return res.status(200).json({
       statau: 'Success',
       message: 'password successfully changed',
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const _id = req.params.id
+    const doc = await findAndDelete({ _id })
+    if (!doc) {
+      throw new AppError('invalid user or already deleted user', 400)
+    }
+    return res.status(200).json({
+      status: 'success',
+      message: 'user deleted!',
     })
   } catch (error) {
     next(error)
